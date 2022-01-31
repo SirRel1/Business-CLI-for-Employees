@@ -4,7 +4,6 @@ const express = require('express');
 const { listen } = require('express/lib/application');
 // const sequelize = require('sequelize');
 require('dotenv').config();
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -25,6 +24,13 @@ const connect = mysql.createConnection(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+console.log(`
+             -------     ---   ---
+             |          /   ^ ^   ^
+             |----     /     ^     ^
+             |         |     |     |
+             ------- . :     :     :`)
+// Function for starting the prompt for selections to be made.
 const makeChoice = () => {
 	inquirer
 		.prompt([
@@ -44,6 +50,7 @@ const makeChoice = () => {
 				],
 			},
 		])
+        // Switch statement to determine what function to run based on user choice.
 		.then((answer) => {
 			switch (answer.choice) {
 				case 'View All Employees':
@@ -204,6 +211,8 @@ function addDepartment() {
 		});
 }
 
+// Updating the employee roles using a function that connects to database.
+
 function updateEmployee() {
     const query = 'SELECT * FROM employees'
     connect.query(query, (err, res) => {
@@ -253,7 +262,7 @@ function updateEmployee() {
                 }
             ])
             .then(upRole => {
-
+// Retrieving an id for the employee role to be updated.
                 let theRole = () => {
                     for (e = 0; e < results.length; e++) {
                       if (upRole.roleChoice === results[e].title) {
@@ -261,7 +270,7 @@ function updateEmployee() {
                       }
                     }
                   }
-                  
+// Iterating thru employee list and getting employee id.
                   const theId = () => {
                     for (p = 0; p < employeeList.length; p++) {
                       if (answers.selectRole == (employeeList[p].first_name + ' ' + employeeList[p].last_name)) {
@@ -269,6 +278,7 @@ function updateEmployee() {
                       }
                     }
                   }
+                //   Updating employee role in the database.
                   const queryAgain = `UPDATE employees SET role_id=? WHERE id=?`;
                   connect.query(queryAgain, [theRole(), theId()], (err, res) => {
                     console.log(`EMPLOYEE ROLE UPDATED!`)
@@ -279,7 +289,10 @@ function updateEmployee() {
             })
           })
         }
-
+        // Exiting the CLI prompts.
+        function finish() {
+            return console.log("Have A Nice Day!")
+        }
             
 
         
