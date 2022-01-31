@@ -29,7 +29,7 @@ console.log(`
              |          /   ^ ^   ^
              |----     /     ^     ^
              |         |     |     |
-             ------- . :     :     :`)
+             ------- . :     :     : .`)
 // Function for starting the prompt for selections to be made.
 const makeChoice = () => {
 	inquirer
@@ -100,7 +100,7 @@ const makeChoice = () => {
 };
 
 function findEmployee() {
-	const query = `SELECT * FROM employees`;
+	const query = "SELECT * FROM employees";
 	connect.query(query, (err, res) => {
 		err ? console.error(err) : console.table(res);
 	});
@@ -265,24 +265,28 @@ function updateEmployee() {
             .then(upRole => {
 // Retrieving an id for the employee role to be updated.
                 let theRole = () => {
+                    
                     for (e = 0; e < results.length; e++) {
-                      if (upRole.roleChoice === results[e].title) {
-                        return results[e].id;
+                        let { title, id} = results[e]
+                      if (upRole.roleChoice === title) {
+                        return id;
                       }
                     }
                   }
 // Iterating thru employee list and getting employee id.
                   const theId = () => {
+                      
                     for (p = 0; p < employeeList.length; p++) {
-                      if (answers.selectRole == (employeeList[p].first_name + ' ' + employeeList[p].last_name)) {
-                        return employeeList[p].id;
+                        let { first_name, last_name, id } = employeeList[p]
+                      if (answers.selectRole == (first_name + ' ' + last_name)) {
+                        return id;
                       }
                     }
                   }
                 //   Updating employee role in the database.
                   const queryAgain = `UPDATE employees SET role_id=? WHERE id=?`;
                   connect.query(queryAgain, [theRole(), theId()], (err, res) => {
-                    console.log(`EMPLOYEE ROLE UPDATED!`)
+                    console.log(`EMPLOYEE ROLE UPDATED TO ${upRole.selectRole}`)
                     return setTimeout(() => makeChoice(), 3000);
                   })
                 })
@@ -292,7 +296,7 @@ function updateEmployee() {
         }
         // Exiting the CLI prompts.
         function finish() {
-            return console.log("Have A Nice Day!")
+            return console.log("Have A Nice Day!") 
         }
             
 
