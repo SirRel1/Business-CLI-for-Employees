@@ -8,15 +8,15 @@ CREATE TABLE employees (
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30)  NOT NULL,
   role_id INT NOT NULL DEFAULT 1,
-  manager_id INT NOT NULL DEFAULT 1
+  manager_id INT NOT NULL DEFAULT 2
 );
 
 
 CREATE TABLE roles (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(30) NOT NULL,
-  salary NUMERIC NOT NULL,
-  department_id INT NOT NULL
+  salary INT NOT NULL,
+  department_id INT NOT NULL DEFAULT 3
   
 );
 

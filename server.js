@@ -98,7 +98,7 @@ function findEmployee() {
 		err ? console.error(err) : console.table(res);
 	});
 	console.log('\n');
-	return makeChoice;
+	return setTimeout(() => makeChoice(), 3000);
 }
 
 function addEmployee() {
@@ -124,7 +124,7 @@ function addEmployee() {
 							`New employee ${answers.fName} ${answers.lName} added.`
 					  );
 			});
-			makeChoice();
+			return setTimeout(() => makeChoice(), 3000);
 		});
 }
 
@@ -145,7 +145,7 @@ function addRole() {
 				type: 'list',
 				name: 'department',
 				message: 'Which department does the role belong to?',
-				choices: ['Engineering', 'Finance', 'Legal', 'Sales'],
+				choices: ['Engineering', 'Human Resources', 'Services', 'Sales'],
 			},
 		])
 		.then((answers) => {
@@ -164,7 +164,7 @@ function addRole() {
 					  );
 			});
 		});
-	makeChoice();
+	return setTimeout(() => makeChoice(), 3000);
 }
 
 function viewRoles() {
@@ -173,7 +173,7 @@ function viewRoles() {
 		err ? console.error(err) : console.table(res);
 	});
 	console.log('\n');
-	return makeChoice;
+	return setTimeout(() => makeChoice(), 3000);
 }
 function viewDepartments() {
 	const query = `SELECT * FROM department`;
@@ -181,7 +181,7 @@ function viewDepartments() {
 		err ? console.error(err) : console.table(res);
 	});
 	console.log('\n');
-	return makeChoice;
+	return setTimeout(() => makeChoice(), 2000);
 }
 
 function addDepartment() {
@@ -200,50 +200,102 @@ function addDepartment() {
 					? console.error('There was an error', err)
 					: console.log('You added', answers.department, 'to departments.');
 			});
-			makeChoice();
+			return setTimeout(() => makeChoice(), 1000);
 		});
 }
-// finish update employee function...
+
 function updateEmployee() {
     const query = 'SELECT * FROM employees'
     connect.query(query, (err, res) => {
         let nuList = [];
         let employeeList = [];
-        
-        let obj = res.map(item =>  {
-            let empList = {
-                id: item.id,
-                first_name: item.first_name,
-                last_name: item.last_name
+        for (i = 0; i < res.length; i++) {
+            const { id, first_name, last_name } = res[i]
+            let nuObject = {
+                id,
+                first_name,
+                last_name,
+            }
+            employeeList.push(nuObject);
+            nuList.push(first_name + ' ' + last_name)
+            
         }
-        
-        nuList.push(empList)
-        console.log("Emp list" , employeeList)
-        employeeList.push(nuList.first_name, nuList.last_name)
     
-    })
     err ? console.error('There was an error', err) :
+    
     inquirer
     .prompt([
         {
             name: 'selectEmp',
             type: 'list',
             choices: nuList,
-            message: "What employee do you want to update?"
-        },
+            message: "Which employee's role do you want to update?"
+        }
     ])
     .then(answers => {
         const nuQuery = 'SELECT * FROM roles'
-        connect.query(nuQuery, (err, res) => {
-            console.log(res)
-        })
-    })
+        connect.query(nuQuery, (err, results) => {
+            const nuRole = [];
+
+            for(a = 0; a < results.length; a++) {
+                nuRole.push(results[a].title)
+            }
+            err ? console.error(err) :
+
+            inquirer
+            .prompt([
+                {
+                    type: 'list',
+                    name: 'selectRole',
+                    choices: nuRole,
+                    message: 'What is the the new role?'
+
+                }
+            ])
+            .then(upRole => {
+
+                let theRole = () => {
+                    for (e = 0; e < results.length; e++) {
+                      if (upRole.roleChoice === results[e].title) {
+                        return results[e].id;
+                      }
+                    }
+                  }
+                  
+                  const theId = () => {
+                    for (p = 0; p < employeeList.length; p++) {
+                      if (answers.selectRole == (employeeList[p].first_name + ' ' + employeeList[p].last_name)) {
+                        return employeeList[p].id;
+                      }
+                    }
+                  }
+                  const queryAgain = `UPDATE employees SET role_id=? WHERE id=?`;
+                  connect.query(queryAgain, [theRole(), theId()], (err, res) => {
+                    console.log(`EMPLOYEE ROLE UPDATED!`)
+                    return setTimeout(() => makeChoice(), 3000);
+                  })
+                })
+              })
+            })
+          })
+        }
+
+            
 
         
         
         
-    })
+    
 
-}
+
 
 makeChoice();
+
+
+
+// let obj = res.map(item =>  {
+//     let empList = {
+//         id: item.id,
+//         first_name: item.first_name,
+//         last_name: item.last_name
+// 
