@@ -128,10 +128,10 @@ function addEmployee() {
 				err
 					? console.log(err)
 					: console.log(
-							`New employee ${answers.fName} ${answers.lName} added.`
+							`\n New employee ${answers.fName} ${answers.lName} added!`
 					  );
 			});
-			return setTimeout(() => makeChoice(), 3000);
+			makeChoice()
 		});
 }
 
@@ -168,11 +168,12 @@ function addRole() {
 							'to the',
 							answers.department,
 							'department.'
-					  );
+					  ); 
 			});
-		});
-	return setTimeout(() => makeChoice(), 3000);
+		}).then(() => makeChoice())
+        
 }
+
 
 function viewRoles() {
 	const query = `SELECT * FROM roles`;
