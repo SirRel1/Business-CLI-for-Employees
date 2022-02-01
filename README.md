@@ -24,7 +24,7 @@ npm start
 ```
 Video Demo: [Video Link](https://drive.google.com/file/d/1rDomWsiLM9RauqdXJobBCwkXO8XCS9Rw/view?usp=sharing)
 
-![Business_CLI(Screenshot)](https://user-images.githubusercontent.com/89208706/152019595-b2a697de-9a1d-425b-b36b-15495e6bd41a.png)
+![Business_CLI(Screenshot)](https://user-images.githubusercontent.com/89208706/152020121-1b27b3c1-0cfb-4b58-9d5e-b01bc7ff2b81.png)
 
 ## License 
 This project is licensed under MIT
