@@ -315,18 +315,21 @@ function updateEmployee() {
 											// Retrieving an id for the employee role to be updated.
 											let theRole = () => {
 												for (e = 0; e < results.length; e++) {
-													let { title, id } = results[e];
-													if (upRole.roleChoice === title) {
-														return id;
+                                                    
+													let { title, role_id } = results[e];
+                                                    console.log("The Results",upRole.selectRole, role_id)
+													if (upRole.selectRole == title) {
+														return role_id;
 													}
 												}
 											};
 											// Iterating thru employee list and getting employee id.
 											const theId = () => {
 												for (p = 0; p < employeeList.length; p++) {
+                                                    console.log("Emp List", employeeList[p])
 													let { first_name, last_name, id } = employeeList[p];
 													if (
-														answers.selectRole ==
+														answers.selectEmp ==
 														first_name + ' ' + last_name
 													) {
 														return id;
