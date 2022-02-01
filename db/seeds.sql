@@ -1,17 +1,20 @@
-INSERT INTO employees (first_name, last_name) VALUES (
-    "Terrell", "Hudson"
+INSERT INTO employees (first_name, last_name, manager_id) VALUES (
+    "Terrell", "Hudson", 2
 ),
 (
-    "Resario", "Clayton"
+    "Resario", "Clayton", 2
 ),
 (
-    "Meagan", "Riverty"
+    "Meagan", "Riverty", 3
 ),
 (
-    "June", "Collins"
+    "June", "Collins", 3
 ),
 (
-    "Fredreana", "Jackson"
+    "Fredreana", "Jackson", 1
+),
+(
+    "Maximillian", "Schmedtmann", 1
 );
 
 
@@ -27,4 +30,11 @@ VALUES ("Engineering"),
  ("Sales"),
  ("Human Resources"),
  ("Services");
+
+
+INSERT INTO managers (manager_name) 
+VALUES ("Curtis Lee"),
+ ("Brenda Marie"),
+ ("Lydia Lewis"),
+ ("Cayla Daniel");
 

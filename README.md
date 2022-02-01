@@ -24,7 +24,8 @@ npm start
 ```
 Video Demo: [Video Link](https://drive.google.com/file/d/1Hfbru4YwbXPfgXf6sAu1ZdHtj7SHpBaR/view?usp=sharing)
 
-## License This project is licensed under MIT
+## License 
+This project is licensed under MIT
 
 ## Contribution
 Spread the word; submit issues.
